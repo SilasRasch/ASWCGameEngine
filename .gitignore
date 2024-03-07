@@ -131,3 +131,5 @@ $RECYCLE.BIN/
 .DS_Store
 
 _NCrunch*
+obj/Debug/net8.0/ASWCGameEngine.AssemblyInfoInputs.cache
+obj/Debug/net8.0/ASWCGameEngine.AssemblyInfo.cs
