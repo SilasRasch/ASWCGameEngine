@@ -10,7 +10,7 @@ public abstract class Creature
     /// <summary>
     /// Initial health which will also be the initial max health
     /// </summary>
-    public int Health { get; set; }
+    public HealthState HealthState { get; set; }
     
     /// <summary>
     /// Item of attack
@@ -50,10 +50,10 @@ public abstract class Creature
     public Creature(string name, int health)
     {
         Name = name;
-        Health = health;
         Inventory = new List<WorldObject>();
         Inventory.Capacity = 20;
         _maxHealth = health;
+        HealthState = new HealthStateNormal(health, this);
     }
 
     /// <summary>
@@ -67,9 +67,13 @@ public abstract class Creature
     /// <returns>Points of damage to be given</returns>
     public int Hit() 
     {
-        if (ItemAttack == null)
-            return _baseDamage;
-        return ItemAttack.Damage * _baseDamage;
+        int dmg = 0;
+        if (ItemAttack == null) 
+            dmg = _baseDamage;   
+        else dmg = ItemAttack.Damage * _baseDamage;
+
+        GameLogger.LogInformation(0, $"Creature ({this.Name}) dealt {dmg} damage");
+        return dmg;
     }
 
     /// <summary>
@@ -78,7 +82,8 @@ public abstract class Creature
     /// <param name="damage">The damage given</param>
     public void ReceiveDamage(int damage) 
     {
-        Health -= damage;
+        HealthState.TakeDamage(damage);
+        GameLogger.LogInformation(0, $"Creature ({this.Name}) took {damage} in damage");
     }
 
     /// <summary>
@@ -105,5 +110,7 @@ public abstract class Creature
         {
             Inventory.Add(obj);
         }
+
+        GameLogger.LogInformation(0, $"Creature ({this.Name}) looted {obj.Name}");
     }
 }
