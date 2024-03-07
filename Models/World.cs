@@ -66,7 +66,7 @@ public abstract class World
 
             using (Stream reader = new FileStream(creatureFilePath, FileMode.Open)) 
             {
-                Creatures = (List<Creature>)creatureSerializer.Deserialize(reader);
+                Creatures = (List<Creature>) creatureSerializer.Deserialize(reader);
             }
         }
         else { Creatures = new List<Creature>(); }
@@ -76,7 +76,7 @@ public abstract class World
 
             using (Stream reader = new FileStream(worldObjectFilePath, FileMode.Open)) 
             {
-                Creatures = (List<Creature>)worldObjectSerializer.Deserialize(reader);
+                Creatures = (List<Creature>) worldObjectSerializer.Deserialize(reader);
             }
         }
         else { WorldObjects = new List<WorldObject>(); }
