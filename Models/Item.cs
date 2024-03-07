@@ -2,6 +2,12 @@
 
 public abstract class Item : WorldObject
 {
+    // TODO: Make template design pattern : https://www.dofactory.com/net/template-method-design-pattern
+    // Idea: -
+    
+    // TODO: Make decorator design pattern : https://www.dofactory.com/net/decorator-design-pattern 
+    // Idea: items can have powers.
+    
     /// <summary>
     /// Standard constructor
     /// </summary>

@@ -5,6 +5,9 @@ namespace ASWCGameEngine;
 
 public abstract class World
 {
+    // TODO: World Abstract Factory : https://www.dofactory.com/net/abstract-factory-design-pattern
+    // TODO: Attack Strategy : https://www.dofactory.com/net/strategy-design-pattern
+    
     /// <summary>
     /// The max world size on the X-axis
     /// </summary>
