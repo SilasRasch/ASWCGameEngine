@@ -133,3 +133,12 @@ $RECYCLE.BIN/
 _NCrunch*
 obj/Debug/net8.0/ASWCGameEngine.AssemblyInfoInputs.cache
 obj/Debug/net8.0/ASWCGameEngine.AssemblyInfo.cs
+obj/project.nuget.cache
+obj/project.assets.json
+obj/Debug/net8.0/ASWCGameEngine.GeneratedMSBuildEditorConfig.editorconfig
+obj/Debug/net8.0/ASWCGameEngine.assets.cache
+obj/Debug/net8.0/ASWCGameEngine.AssemblyInfoInputs.cache
+obj/Debug/net8.0/ASWCGameEngine.AssemblyInfo.cs
+obj/ASWCGameEngine.csproj.nuget.g.props
+obj/ASWCGameEngine.csproj.nuget.dgspec.json
+.vs/ASWCGameEngine/DesignTimeBuild/.dtbcache.v2
