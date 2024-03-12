@@ -8,6 +8,11 @@ public abstract class HealthState
     /// The current amount of health points
     /// </summary>
     public int Health { get; set; }
+
+    /// <summary>
+    /// Max health for all creatures
+    /// </summary>
+    private int _maxHealth = 100;
     
     /// <summary>
     /// The creature in which this state is located
@@ -17,12 +22,12 @@ public abstract class HealthState
     /// <summary>
     /// Lower health limit of the state
     /// </summary>
-    public int lowerLimit;
+    public int lowerLimit { get; set; }
     
     /// <summary>
     /// Upper health limit of the state
     /// </summary>
-    public int upperLimit;
+    public int upperLimit { get; set; }
     
     /// <summary>
     /// Multiplier where movement speed buff/debuff is located
@@ -89,8 +94,10 @@ public abstract class HealthState
     /// <param name="healthToHeal">Amount of health to heal</param>
     public void Heal(int healthToHeal) 
     {
-        Health += healthToHeal;
+        if (Health + healthToHeal <= 100) 
+            Health += healthToHeal;
+        else
+            Health = 100;
         StateChangeCheck();
-        // TODO: Heal to max health
     }
 }

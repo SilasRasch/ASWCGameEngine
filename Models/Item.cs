@@ -1,4 +1,5 @@
-﻿using ASWCGameEngine.Models.Interfaces;
+﻿using ASWCGameEngine.Models;
+using ASWCGameEngine.Models.Interfaces;
 using System.Numerics;
 
 namespace ASWCGameEngine;
@@ -15,7 +16,7 @@ public abstract class Item : WorldObject, ILootable, IRemovable
     /// Standard constructor
     /// </summary>
     /// <param name="name">Item name</param>
-    public Item(int id, Vector2 position, string name) : base(id, position, name)
+    public Item(int id, Position position, string name) : base(id, position, name)
     {
         // More to come
         // Maybe level required to use?

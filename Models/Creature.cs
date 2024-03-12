@@ -1,4 +1,5 @@
-﻿using ASWCGameEngine.Models.Interfaces;
+﻿using ASWCGameEngine.Models;
+using ASWCGameEngine.Models.Interfaces;
 using ASWCGameEngine.Models.States;
 using System.Numerics;
 
@@ -14,7 +15,7 @@ public abstract class Creature : IGameObject
     /// <summary>
     /// GameObject position in world
     /// </summary>
-    public Vector2 Position { get; set; }
+    public Position Position { get; set; }
     
     /// <summary>
     /// Creature name
@@ -61,7 +62,7 @@ public abstract class Creature : IGameObject
     /// </summary>
     /// <param name="name">Given name of creature</param>
     /// <param name="health">Initial health of creauture</param>
-    public Creature(int id, Vector2 position, string name, int health)
+    public Creature(int id, Position position, string name, int health)
     {
         Id = id;
         Position = position;
@@ -94,13 +95,20 @@ public abstract class Creature : IGameObject
     }
 
     /// <summary>
-    /// Subtracts the given damage from the health-property
+    /// Subtracts the given damage from the health-property - takes in account the defence item
     /// </summary>
     /// <param name="damage">The damage given</param>
-    public void ReceiveDamage(int damage) 
+    public void ReceiveDamage(int rawDamage) 
     {
-        HealthState.TakeDamage(damage);
-        GameLogger.LogInformation(0, $"Creature ({this.Name}) took {damage} in damage");
+        int realDamage;
+
+        if (ItemDefence != null)
+            realDamage = rawDamage - ItemDefence.ReduceDamage;
+        else
+            realDamage = rawDamage;
+
+        HealthState.TakeDamage(realDamage);
+        GameLogger.LogInformation(0, $"Creature ({this.Name}) took {realDamage} in damage");
     }
 
     /// <summary>
@@ -128,6 +136,25 @@ public abstract class Creature : IGameObject
             Inventory.Add(obj);
         }
 
+        //obj.Position = new Vector2(Configuration.Instance.MaxWorldSizeX+1, Configuration.Instance.MaxWorldSizeY+1);
+        obj.Position = Position;
+
         GameLogger.LogInformation(0, $"Creature ({this.Name}) looted {obj.Name}");
+    }
+
+    public Position MoveTo(Position newPos)
+    {
+        Position.X = newPos.X;
+        Position.Y = newPos.Y;
+
+        GameLogger.LogInformation(0, $"Creature ({this.Name}) moved (teleported) to {Position}");
+        return Position;
+    }
+
+    public Position Move(Position moveVector)
+    {
+        Position += moveVector;
+        GameLogger.LogInformation(0, $"Creature ({this.Name}) moved to {Position}");
+        return Position;
     }
 }

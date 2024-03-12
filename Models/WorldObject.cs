@@ -1,4 +1,5 @@
-﻿using ASWCGameEngine.Models.Interfaces;
+﻿using ASWCGameEngine.Models;
+using ASWCGameEngine.Models.Interfaces;
 using System.Numerics;
 
 namespace ASWCGameEngine;
@@ -13,7 +14,7 @@ public abstract class WorldObject : IGameObject
     /// <summary>
     /// GameObject position in the world 
     /// </summary>
-    public Vector2 Position { get; set; }
+    public Position Position { get; set; }
 
     /// <summary>
     /// Object name
@@ -36,7 +37,7 @@ public abstract class WorldObject : IGameObject
     /// <param name="name">Object name</param>
     /// <param name="lootable">Is item able to be picked-up</param>
     /// <param name="removable">Is item able to be removed</param>
-    public WorldObject(int id, Vector2 position, string name) //bool lootable, bool removable) -> overført til marker interfaces
+    public WorldObject(int id, Position position, string name) //bool lootable, bool removable) -> overført til marker interfaces
     {
         Id = id;
         Position = position;

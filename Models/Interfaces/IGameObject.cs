@@ -10,6 +10,6 @@ namespace ASWCGameEngine.Models.Interfaces
     public interface IGameObject
     {
         int Id { get; set; }
-        Vector2 Position { get; set; }
+        Position Position { get; set; }
     }
 }
