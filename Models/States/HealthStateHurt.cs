@@ -10,17 +10,24 @@ namespace ASWCGameEngine.Models.States
     {
         public HealthStateHurt(HealthState state) : base(state)
         {
-            lowerLimit = 80;
-            movementSpeedMultiplier = 1.2;
-            damageMultiplier = 1.15;
+            upperLimit = 34;
+            lowerLimit = 1;
+            movementSpeedMultiplier = 0.8;
+            damageMultiplier = 0.8;
         }
 
-        protected override void StateChangeCheck()
-        {
-            if (Health > 35)
-            {
-                Creature.HealthState = new HealthStateNormal(this);
-            }
-        }
+        //public override void StateChangeCheck()
+        //{
+        //    if (Health > 35)
+        //    {
+        //        Creature.HealthState = new HealthStateNormal(this);
+        //        Creature.HealthState.StateChangeCheck();
+        //    }
+        //    else if (Health <= 0)
+        //    {
+        //        Creature.HealthState = new HealthStateDead(this);
+        //        Creature.HealthState.StateChangeCheck();
+        //    }
+        //}
     }
 }

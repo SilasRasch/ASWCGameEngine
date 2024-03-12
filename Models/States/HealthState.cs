@@ -1,4 +1,6 @@
-﻿namespace ASWCGameEngine;
+﻿using ASWCGameEngine.Models.States;
+
+namespace ASWCGameEngine;
 
 public abstract class HealthState
 {
@@ -15,12 +17,12 @@ public abstract class HealthState
     /// <summary>
     /// Lower health limit of the state
     /// </summary>
-    protected int lowerLimit;
+    public int lowerLimit;
     
     /// <summary>
     /// Upper health limit of the state
     /// </summary>
-    protected int upperLimit;
+    public int upperLimit;
     
     /// <summary>
     /// Multiplier where movement speed buff/debuff is located
@@ -52,11 +54,24 @@ public abstract class HealthState
         Health = health;
         Creature = creature;
     }
-    
+
+    /// <summary>
+    /// Default constructor
+    /// </summary>
+    public HealthState()
+    {
+        
+    }
+
     /// <summary>
     /// Method for changing between states
     /// </summary>
-    protected abstract void StateChangeCheck();
+    public void StateChangeCheck()
+    {
+        ChangeHealthState.StateChangeCheck(this.Creature, this.Health);
+    }
+
+    //public abstract void StateChangeCheck();
 
     /// <summary>
     /// Subtracts damage from health pool and does a state change check

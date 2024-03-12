@@ -5,6 +5,8 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ASWCGameEngine", "ASWCGameEngine.csproj", "{71A75E20-1727-4A76-BF2E-4F18F8A27C01}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASWCGameEngineConsoleApp", "..\ASWCGameEngineConsoleApp\ASWCGameEngineConsoleApp.csproj", "{2B4E0283-0F54-461D-AEEF-946D4DBBB50F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{71A75E20-1727-4A76-BF2E-4F18F8A27C01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71A75E20-1727-4A76-BF2E-4F18F8A27C01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71A75E20-1727-4A76-BF2E-4F18F8A27C01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B4E0283-0F54-461D-AEEF-946D4DBBB50F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B4E0283-0F54-461D-AEEF-946D4DBBB50F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B4E0283-0F54-461D-AEEF-946D4DBBB50F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B4E0283-0F54-461D-AEEF-946D4DBBB50F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

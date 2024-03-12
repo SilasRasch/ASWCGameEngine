@@ -70,6 +70,7 @@ public abstract class Creature : IGameObject
         Inventory.Capacity = 20;
         _maxHealth = health;
         HealthState = new HealthStateNormal(health, this);
+        HealthState.StateChangeCheck();
     }
 
     /// <summary>
