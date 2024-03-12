@@ -1,7 +1,20 @@
-﻿namespace ASWCGameEngine;
+﻿using ASWCGameEngine.Models.Interfaces;
+using System.Numerics;
 
-public abstract class WorldObject
+namespace ASWCGameEngine;
+
+public abstract class WorldObject : IGameObject
 {
+    /// <summary>
+    /// GameObject global ID
+    /// </summary>
+    public int Id { get; set; }
+    
+    /// <summary>
+    /// GameObject position in the world 
+    /// </summary>
+    public Vector2 Position { get; set; }
+
     /// <summary>
     /// Object name
     /// </summary>
@@ -10,12 +23,12 @@ public abstract class WorldObject
     /// <summary>
     /// Is item able to be picked-up by creatures
     /// </summary>
-    public bool Lootable { get; set; }
+    // public bool Lootable { get; set; }
     
     /// <summary>
     /// Is item able to be removed or is it static?
     /// </summary>
-    public bool Removable { get; set; }
+    // public bool Removable { get; set; }
 
     /// <summary>
     /// Standard constructor
@@ -23,11 +36,13 @@ public abstract class WorldObject
     /// <param name="name">Object name</param>
     /// <param name="lootable">Is item able to be picked-up</param>
     /// <param name="removable">Is item able to be removed</param>
-    public WorldObject(string name, bool lootable, bool removable)
+    public WorldObject(int id, Vector2 position, string name) //bool lootable, bool removable) -> overført til marker interfaces
     {
+        Id = id;
+        Position = position;
         Name = name;
-        Lootable = lootable;
-        Removable = removable;
+        // Lootable = lootable;
+        // Removable = removable;
     }
 
     /// <summary>

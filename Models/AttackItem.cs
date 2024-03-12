@@ -1,4 +1,6 @@
-﻿namespace ASWCGameEngine;
+﻿using System.Numerics;
+
+namespace ASWCGameEngine;
 
 public abstract class AttackItem : Item
 {
@@ -18,7 +20,7 @@ public abstract class AttackItem : Item
     /// <param name="name">Item name</param>
     /// <param name="damage">Item damage</param>
     /// <param name="range">Item range</param>
-    public AttackItem(string name, int damage, int range) : base(name)
+    public AttackItem(int id, Vector2 position, string name, int damage, int range) : base(id, position, name)
     {
         Damage = damage;
         Range = range;

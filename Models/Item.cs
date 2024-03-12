@@ -1,6 +1,9 @@
-﻿namespace ASWCGameEngine;
+﻿using ASWCGameEngine.Models.Interfaces;
+using System.Numerics;
 
-public abstract class Item : WorldObject
+namespace ASWCGameEngine;
+
+public abstract class Item : WorldObject, ILootable, IRemovable
 {
     // TODO: Make template design pattern : https://www.dofactory.com/net/template-method-design-pattern
     // Idea: -
@@ -12,7 +15,7 @@ public abstract class Item : WorldObject
     /// Standard constructor
     /// </summary>
     /// <param name="name">Item name</param>
-    public Item(string name) : base(name, true, true)
+    public Item(int id, Vector2 position, string name) : base(id, position, name)
     {
         // More to come
         // Maybe level required to use?

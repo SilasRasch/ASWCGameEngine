@@ -1,7 +1,21 @@
-﻿namespace ASWCGameEngine;
+﻿using ASWCGameEngine.Models.Interfaces;
+using ASWCGameEngine.Models.States;
+using System.Numerics;
 
-public abstract class Creature
+namespace ASWCGameEngine;
+
+public abstract class Creature : IGameObject
 {
+    /// <summary>
+    /// GameObject global id
+    /// </summary>
+    public int Id { get; set; }
+    
+    /// <summary>
+    /// GameObject position in world
+    /// </summary>
+    public Vector2 Position { get; set; }
+    
     /// <summary>
     /// Creature name
     /// </summary>
@@ -11,7 +25,7 @@ public abstract class Creature
     /// Initial health which will also be the initial max health
     /// </summary>
     public HealthState HealthState { get; set; }
-    
+        
     /// <summary>
     /// Item of attack
     /// </summary>
@@ -47,8 +61,10 @@ public abstract class Creature
     /// </summary>
     /// <param name="name">Given name of creature</param>
     /// <param name="health">Initial health of creauture</param>
-    public Creature(string name, int health)
+    public Creature(int id, Vector2 position, string name, int health)
     {
+        Id = id;
+        Position = position;
         Name = name;
         Inventory = new List<WorldObject>();
         Inventory.Capacity = 20;
