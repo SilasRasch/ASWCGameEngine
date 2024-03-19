@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ASWCGameEngine")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b139f258855675da885e2d739039d29dd776c355")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1f2383f70f33c24f4e8728e1cdc92d5c85942699")]
 [assembly: System.Reflection.AssemblyProductAttribute("ASWCGameEngine")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ASWCGameEngine")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
