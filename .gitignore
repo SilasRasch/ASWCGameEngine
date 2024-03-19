@@ -142,3 +142,4 @@ obj/Debug/net8.0/ASWCGameEngine.AssemblyInfo.cs
 obj/ASWCGameEngine.csproj.nuget.g.props
 obj/ASWCGameEngine.csproj.nuget.dgspec.json
 .vs/ASWCGameEngine/DesignTimeBuild/.dtbcache.v2
+/.vs
