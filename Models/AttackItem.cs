@@ -31,4 +31,9 @@ public abstract class AttackItem : Item
     /// Default constructor
     /// </summary>
     public AttackItem() : base() { }
+
+    public override string ToString()
+    {
+        return $"{{{nameof(Damage)}={Damage.ToString()}, {nameof(Range)}={Range.ToString()}, {nameof(Id)}={Id.ToString()}, {nameof(Position)}={Position}, {nameof(Name)}={Name}}}";
+    }
 }

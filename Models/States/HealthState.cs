@@ -73,7 +73,7 @@ public abstract class HealthState
     /// </summary>
     public void StateChangeCheck()
     {
-        ChangeHealthState.StateChangeCheck(this.Creature, this.Health);
+        ChangeHealthState.StateChangeCheck(this.Creature);
     }
 
     //public abstract void StateChangeCheck();

@@ -1,13 +1,11 @@
-﻿using System.Xml;
+﻿using ASWCGameEngine.Models.Interfaces;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace ASWCGameEngine;
 
 public abstract class World
 {
-    // TODO: World Abstract Factory : https://www.dofactory.com/net/abstract-factory-design-pattern
-    // TODO: Attack Strategy : https://www.dofactory.com/net/strategy-design-pattern
-    
     /// <summary>
     /// The max world size on the X-axis
     /// </summary>
@@ -21,12 +19,7 @@ public abstract class World
     /// <summary>
     /// The world's list of world objects
     /// </summary>
-    public List<WorldObject> WorldObjects { get; set; }
-    
-    /// <summary>
-    /// The world's list of creatures
-    /// </summary>
-    public List<Creature> Creatures { get; set; }
+    public List<IGameObject> GameObjects { get; set; }
     
     /// <summary>
     /// Standard constructor for new world
@@ -37,21 +30,19 @@ public abstract class World
     {
         MaxWorldSizeX = maxWorldSizeX;
         MaxWorldSizeY = maxWorldSizeY;
-        WorldObjects = new List<WorldObject>();
-        Creatures = new List<Creature>();
+        GameObjects = new List<IGameObject>();
 
-        GameLogger.LogInformation(0, $"World was created : ({MaxWorldSizeX}, {MaxWorldSizeY}) : {Creatures.Count} Creatures - {WorldObjects.Count} World Objects");
+        GameLogger.LogInformation(0, $"World was created : ({MaxWorldSizeX}, {MaxWorldSizeY}) : {GameObjects.Count} objects");
     }
 
 
-    public World(int maxWorldSizeX, int maxWorldSizeY, List<WorldObject> worldObjects, List<Creature> creatures)
+    public World(int maxWorldSizeX, int maxWorldSizeY, List<IGameObject> gameObjects)
     {
         MaxWorldSizeX = maxWorldSizeX;
         MaxWorldSizeY = maxWorldSizeY;
-        WorldObjects = worldObjects;
-        Creatures = creatures;
+        GameObjects = gameObjects;
 
-        GameLogger.LogInformation(0, $"World was created : ({MaxWorldSizeX}, {MaxWorldSizeY}) : {Creatures.Count} Creatures - {WorldObjects.Count} World Objects");
+        GameLogger.LogInformation(0, $"World was created : ({MaxWorldSizeX}, {MaxWorldSizeY}) : {GameObjects.Count} objects");
     }
 
     /// <summary>
@@ -59,35 +50,25 @@ public abstract class World
     /// </summary>
     /// <param name="configFilePath">The full path of the file</param>
     /// <exception cref="FileNotFoundException">Thrown if the file does not exist</exception>
-    public World(string configFilePath, string? creatureFilePath = null, string? worldObjectFilePath = null)
+    public World(string configFilePath, string? gameObjFilePath = null)
     {
         Configuration.LoadConfig(configFilePath);
         Configuration conf = Configuration.Instance;
 
-        if (creatureFilePath != null) {
-            XmlSerializer creatureSerializer = new XmlSerializer(typeof(Creature));
+        if (gameObjFilePath != null) {
+            XmlSerializer gameObjSerializer = new XmlSerializer(typeof(Creature));
 
-            using (Stream reader = new FileStream(creatureFilePath, FileMode.Open)) 
+            using (Stream reader = new FileStream(gameObjFilePath, FileMode.Open)) 
             {
-                Creatures = (List<Creature>) creatureSerializer.Deserialize(reader);
+                GameObjects = (List<IGameObject>)gameObjSerializer.Deserialize(reader)!;
             }
         }
-        else { Creatures = new List<Creature>(); }
-
-        if (worldObjectFilePath != null) {
-            XmlSerializer worldObjectSerializer = new XmlSerializer(typeof(Creature));
-
-            using (Stream reader = new FileStream(worldObjectFilePath, FileMode.Open)) 
-            {
-                Creatures = (List<Creature>) worldObjectSerializer.Deserialize(reader);
-            }
-        }
-        else { WorldObjects = new List<WorldObject>(); }
+        else { GameObjects = new List<IGameObject>(); }
 
         MaxWorldSizeX = conf.MaxWorldSizeX;
         MaxWorldSizeY = conf.MaxWorldSizeY;
 
-        GameLogger.LogInformation(0, $"World was created : ({MaxWorldSizeX}, {MaxWorldSizeY}) : {Creatures.Count} Creatures - {WorldObjects.Count} World Objects");
+        GameLogger.LogInformation(0, $"World was created : ({MaxWorldSizeX}, {MaxWorldSizeY}) : {GameObjects.Count} objects");
     }
 
     /// <summary>

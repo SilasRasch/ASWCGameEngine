@@ -18,15 +18,25 @@ namespace ASWCGameEngine.Models.States
             new HealthStateDead(normal)
         };
 
-        public static void StateChangeCheck(Creature creature, int health)
+        /// <summary>
+        /// Is called to check whether or not a creature should change its health state depending on its current health
+        /// </summary>
+        /// <param name="creature">The creature of which the health state is to be changed</param>
+        /// <param name="health">The current health of the creature</param>
+        public static void StateChangeCheck(Creature creature)
         {
+            Type initialState = creature.HealthState.GetType();
+
             foreach (HealthState state in healthStates)
             {
-                if (health >= state.lowerLimit && health <= state.upperLimit)
+                if (creature.Health >= state.lowerLimit && creature.Health <= state.upperLimit)
                 {
                     Type type = state.GetType();
                     ConstructorInfo ctor = type.GetConstructor(new Type[] { typeof(HealthState) });
                     creature.HealthState = (HealthState) ctor.Invoke(new Object[] { creature.HealthState });
+
+                    if (type != initialState) // Only log when there is an actual change
+                        GameLogger.LogInformation(1, $"{creature.Name} changed health state to {creature.HealthState.GetType()}");
                 }
             }
         }

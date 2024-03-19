@@ -26,6 +26,11 @@ public abstract class Creature : IGameObject
     /// Initial health which will also be the initial max health
     /// </summary>
     public HealthState HealthState { get; set; }
+
+    /// <summary>
+    /// The current health of the creature
+    /// </summary>
+    public int Health { get {  return HealthState.Health; } }
         
     /// <summary>
     /// Item of attack
@@ -41,6 +46,12 @@ public abstract class Creature : IGameObject
     /// Inventory / bag for holding not in-use items (items to be saved)
     /// </summary>
     public List<WorldObject> Inventory { get; set; }
+
+    /// <summary>
+    /// Returns true if creature is alive, false if not.
+    /// Can be used for conditional rendering of creatures in the world-grid.
+    /// </summary>
+    public bool IsAlive { get { return HealthState.GetType() != typeof(HealthStateDead) ? true : false; } }
     
     /// <summary>
     /// The max health value
@@ -83,32 +94,46 @@ public abstract class Creature : IGameObject
     /// Genereate damage for hitting/damaging other creatures
     /// </summary>
     /// <returns>Points of damage to be given</returns>
-    public int Hit() 
+    public int? Hit() 
     {
-        int dmg = 0;
-        if (ItemAttack == null) 
-            dmg = _baseDamage;   
-        else dmg = ItemAttack.Damage * _baseDamage;
+        if (IsAlive)
+        {
+            int dmg = 0;
+            if (ItemAttack == null)
+                dmg = _baseDamage;
+            else dmg = ItemAttack.Damage * _baseDamage;
 
-        GameLogger.LogInformation(0, $"Creature ({this.Name}) dealt {dmg} damage");
-        return dmg;
+            GameLogger.LogInformation(0, $"Creature ({this.Name}) dealt {dmg} damage");
+            return dmg;
+        }
+        return null;
     }
 
     /// <summary>
     /// Subtracts the given damage from the health-property - takes in account the defence item
     /// </summary>
     /// <param name="damage">The damage given</param>
-    public void ReceiveDamage(int rawDamage) 
+    public void ReceiveDamage(int? rawDamage) 
     {
-        int realDamage;
+        if (IsAlive && rawDamage != null)
+        {
+            int? realDamage;
 
-        if (ItemDefence != null)
-            realDamage = rawDamage - ItemDefence.ReduceDamage;
+            if (ItemDefence != null)
+                if (ItemDefence.ReduceDamage > rawDamage)
+                    realDamage = 0;
+                else
+                    realDamage = rawDamage - ItemDefence.ReduceDamage;
+            else
+                realDamage = rawDamage;
+
+            HealthState.TakeDamage((int)realDamage);
+            GameLogger.LogInformation(0, $"Creature ({this.Name}) took {realDamage} damage");
+        }
         else
-            realDamage = rawDamage;
-
-        HealthState.TakeDamage(realDamage);
-        GameLogger.LogInformation(0, $"Creature ({this.Name}) took {realDamage} in damage");
+        {
+            GameLogger.LogInformation(0, $"{this.Name} did not receive any damage");
+        }
     }
 
     /// <summary>
@@ -117,44 +142,60 @@ public abstract class Creature : IGameObject
     /// <param name="obj">The object to be looted</param>
     public void Loot(WorldObject obj) 
     {
-        if (obj is AttackItem) 
+        if (IsAlive)
         {
-            if (ItemAttack == null) 
+            if (obj is AttackItem)
             {
-                ItemAttack = (AttackItem) obj;
+                if (ItemAttack == null)
+                {
+                    ItemAttack = (AttackItem)obj;
+                }
             }
-        }
-        else if (obj is DefenceItem) 
-        {
-            if (ItemDefence == null) 
+            else if (obj is DefenceItem)
             {
-                ItemDefence = (DefenceItem) obj;
+                if (ItemDefence == null)
+                {
+                    ItemDefence = (DefenceItem)obj;
+                }
             }
-        }
-        else 
-        {
-            Inventory.Add(obj);
-        }
+            else
+            {
+                Inventory.Add(obj);
+            }
 
-        //obj.Position = new Vector2(Configuration.Instance.MaxWorldSizeX+1, Configuration.Instance.MaxWorldSizeY+1);
-        obj.Position = Position;
+            //obj.Position = new Vector2(Configuration.Instance.MaxWorldSizeX+1, Configuration.Instance.MaxWorldSizeY+1);
+            obj.Position = Position;
 
-        GameLogger.LogInformation(0, $"Creature ({this.Name}) looted {obj.Name}");
+            GameLogger.LogInformation(0, $"Creature ({this.Name}) looted {obj.Name}");
+        }
     }
 
     public Position MoveTo(Position newPos)
     {
-        Position.X = newPos.X;
-        Position.Y = newPos.Y;
+        if (IsAlive)
+        {
+            Position.X = newPos.X;
+            Position.Y = newPos.Y;
 
-        GameLogger.LogInformation(0, $"Creature ({this.Name}) moved (teleported) to {Position}");
-        return Position;
+            GameLogger.LogInformation(0, $"Creature ({this.Name}) moved (teleported) to {Position}");
+            return Position;
+        }
+        return null!;
     }
 
     public Position Move(Position moveVector)
     {
-        Position += moveVector;
-        GameLogger.LogInformation(0, $"Creature ({this.Name}) moved to {Position}");
-        return Position;
+        if (IsAlive)
+        {
+            Position += moveVector;
+            GameLogger.LogInformation(0, $"Creature ({this.Name}) moved to {Position}");
+            return Position;
+        }
+        return null!;
+    }
+
+    public override string ToString()
+    {
+        return $"{{{nameof(Id)}={Id.ToString()}, {nameof(Position)}={Position}, {nameof(Name)}={Name}, {nameof(HealthState)}={HealthState}, {nameof(ItemAttack)}={ItemAttack}, {nameof(ItemDefence)}={ItemDefence}, {nameof(Inventory)}={Inventory}, {nameof(IsAlive)}={IsAlive.ToString()}}}";
     }
 }
