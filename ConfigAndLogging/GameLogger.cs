@@ -28,10 +28,10 @@ public class GameLogger
         _traceSource.Switch = new SourceSwitch(Configuration.Instance.WorldName, SourceLevels.All.ToString());
 
         if (Configuration.Instance.LogTXT)
-            _traceSource.Listeners.Add(new TextWriterTraceListener("GameLog.txt"));
+            _traceSource.Listeners.Add(new TextWriterTraceListener(new StreamWriter("GameLog.txt") { AutoFlush = true }));
             
         if (Configuration.Instance.LogXML)
-            _traceSource.Listeners.Add(new XmlWriterTraceListener("GameLog.xml"));
+            _traceSource.Listeners.Add(new XmlWriterTraceListener(new StreamWriter("GameLog.xml") { AutoFlush = true }));
 
         if (Configuration.Instance.LogConsole)
             _traceSource.Listeners.Add(new ConsoleTraceListener());

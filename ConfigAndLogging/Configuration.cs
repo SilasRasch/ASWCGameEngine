@@ -45,6 +45,11 @@ public class Configuration
     public bool LogTXT { get; set; }
 
     /// <summary>
+    /// The current world object in play
+    /// </summary>
+    public World CurrentWorld { get; set; }
+
+    /// <summary>
     /// Standard constructor: 
     /// Applies some standard values to the configuration...
     /// </summary>
@@ -110,6 +115,8 @@ public class Configuration
             _instance.LogTXT = Convert.ToBoolean(logTxtNode.InnerText.Trim());
         }
 
+        // Reload game logger
+        GameLogger.Reload();
         GameLogger.LogEvent(TraceEventType.Warning, 0, $"New configuration loaded : @{configFilePath}");
 
         return _instance;

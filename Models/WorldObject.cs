@@ -44,6 +44,11 @@ public abstract class WorldObject : IGameObject
         Name = name;
         // Lootable = lootable;
         // Removable = removable;
+
+        if (Configuration.Instance.CurrentWorld != null)
+        {
+            Configuration.Instance.CurrentWorld.GameObjects.Add(this);
+        }
     }
 
     /// <summary>
